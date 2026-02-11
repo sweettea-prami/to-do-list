@@ -1,0 +1,132 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: url(pink.jpg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.todo-app {
+  font-size: 1.8rem;
+  width: 500px;
+  padding: 20px;
+  background: white;   
+  border-radius: 10px;      
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color:white;
+  background-color: palevioletred;
+}
+#task-input{
+    font-size: 1.3rem;
+    border-radius: 10px;
+    background-color: pink;
+    color: white;
+    border: none;
+    box-shadow: 5px 2px 15px rgba(0,0,0,0.1);
+}
+#task-input::placeholder {
+    color: white;
+}
+
+
+button{
+    font-size: 1.3rem;
+    border-radius: 250px;
+    border: 1px solid  #efd9d9;
+    background-color: pink;
+    color: white;
+}
+button:hover{
+    background-color:palevioletred;
+}
+button:active{
+    background-color: rgb(239, 119, 159);
+}
+#task-list li{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,194,209,0.3);
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  color: white;
+  position: relative;
+  transition: box-shadow 0.2s ease;
+
+}
+#task-list li:hover{
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+#task-list li .checkbox{
+  min-width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  background-origin: 50%;
+  cursor: pointer;
+  appearance: none;
+  transition: all 0.2s ease;
+}
+#task-list li .checkbox:checked{
+  background-color: rgb(228, 87, 111);
+  transform: sacle(1.1);
+}
+#task-list li .checkbox:checked::before{
+  content: '\2713';
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+#task-list li span{
+  flex:1;
+  margin-left: 10px;
+  word-wrap: break-word;
+}
+.task-buttons{
+  display: flex;
+  gap: 10px;
+  margin-right: auto;
+}
+.task-buttons button{
+  background: pink;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: white;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.task-buttons .edit-btn{
+  background-color: rgb(252, 252, 82);
+
+}
+.task-buttons .delete-btn{
+  background-color: rgb(26, 16, 16);
+}
+.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
