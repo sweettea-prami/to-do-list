@@ -10,10 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
             taskList.children.length > 0 ? "100%" : "50%";
     }
 
-    const addTask = (event) => {
-        event.preventDefault();
+    const saveTaskToLocalStorage = () => {
+        const tasks = Array.from(taskList.querySelectorAll('li')).map(li => ({
+            text: li.querySelector('span').textContent,
+            completed: li.querySelector('.checkbox').checked
+        }));
 
-        const taskText = taskInput.value.trim();
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    };
+
+    const addTask = (taskText, completed = false) => {
         if (!taskText) return;
 
         const li = document.createElement('li');
@@ -33,37 +39,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const checkbox = li.querySelector('.checkbox');
         const editBtn = li.querySelector('.edit-btn');
-        const taskSpan=li.querySelector('span')
+        const taskSpan = li.querySelector('span');
+
+        checkbox.checked = completed;
+        if (completed) {
+            taskSpan.classList.add('completed');
+        }
+
         checkbox.addEventListener('change', () => {
-
             taskSpan.classList.toggle('completed', checkbox.checked);
+            saveTaskToLocalStorage();
         });
-
 
         editBtn.addEventListener('click', () => {
             if (!checkbox.checked) {
-                taskInput.value = li.querySelector('span').textContent;
+                taskInput.value = taskSpan.textContent;
                 li.remove();
                 updateContainerWidth();
+                saveTaskToLocalStorage();
             }
         });
 
         li.querySelector(".delete-btn").addEventListener('click', () => {
             li.remove();
             updateContainerWidth();
+            saveTaskToLocalStorage();
         });
 
         taskList.appendChild(li);
-        taskInput.value = "";
         updateContainerWidth();
+        saveTaskToLocalStorage();
     };
 
-    addTaskBtn.addEventListener('click', addTask);
+    const loadTasksFromLocalStorage = () => {
+        const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        savedTasks.forEach(({ text, completed }) => {
+            addTask(text, completed);
+        });
+    };
+
+    addTaskBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const taskText = taskInput.value.trim();
+        addTask(taskText);
+        taskInput.value = "";
+    });
 
     taskInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
-            addTask(e);
+            e.preventDefault();
+            const taskText = taskInput.value.trim();
+            addTask(taskText);
+            taskInput.value = "";
         }
     });
 
+    loadTasksFromLocalStorage(); 
 });
