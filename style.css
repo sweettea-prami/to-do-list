@@ -29,6 +29,7 @@ body {
   flex-direction: column;
   color:white;
   background-color: palevioletred;
+  backdrop-filter: blur;
 }
 #task-input{
     font-size: 1.3rem;
